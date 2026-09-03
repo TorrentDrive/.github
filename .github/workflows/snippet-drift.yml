@@ -1,0 +1,146 @@
+name: Snippet drift
+
+# A few short strings have to appear verbatim in more than one repository: the
+# two install commands, the image name, the tagline. They live in
+# TorrenClou/website under snippets/ and are CHECKED here, never injected.
+#
+# Injection was considered and rejected. It needs a bot with write access to
+# four repositories, it conflicts with every hand-edited README, and it produces
+# commit noise indistinguishable from real work — all to keep four strings in
+# sync.
+#
+# This is deliberately nightly and deliberately non-blocking. A per-PR check
+# that turns a backend pull request red because someone edited a snippet in the
+# website repo is a check that gets disabled within a month. Instead it keeps a
+# single issue up to date.
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare every README against the canonical snippets
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+
+          RAW=https://raw.githubusercontent.com/TorrenClou
+
+          fetch() {
+            curl -fsSL --max-time 30 "$1" 2>/dev/null
+          }
+
+          install_linux=$(fetch "$RAW/website/main/snippets/install-linux.txt") || {
+            echo "::error::Could not read snippets/install-linux.txt from the website repo."
+            exit 1
+          }
+          install_windows=$(fetch "$RAW/website/main/snippets/install-windows.txt") || {
+            echo "::error::Could not read snippets/install-windows.txt from the website repo."
+            exit 1
+          }
+
+          # repo:snippets that must appear in its README
+          targets="
+          .github:profile/README.md:both
+          deploy:README.md:both
+          backend:README.md:linux
+          frontend:README.md:linux
+          "
+
+          report=""
+          drift=0
+
+          for entry in $targets; do
+            [ -z "$entry" ] && continue
+            repo=${entry%%:*}
+            rest=${entry#*:}
+            path=${rest%%:*}
+            which=${rest#*:}
+
+            readme=$(fetch "$RAW/$repo/main/$path") || {
+              report="${report}- \`$repo/$path\` could not be fetched"$'\n'
+              drift=1
+              continue
+            }
+
+            if ! printf '%s' "$readme" | grep -qF "$install_linux"; then
+              report="${report}- \`$repo/$path\` is missing the Linux install command"$'\n'
+              drift=1
+            fi
+
+            if [ "$which" = "both" ]; then
+              if ! printf '%s' "$readme" | grep -qF "$install_windows"; then
+                report="${report}- \`$repo/$path\` is missing the Windows install command"$'\n'
+                drift=1
+              fi
+            fi
+          done
+
+          {
+            echo "drift=$drift"
+            echo "report<<REPORT_EOF"
+            printf '%s' "$report"
+            echo "REPORT_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          if [ "$drift" -eq 0 ]; then
+            echo "All READMEs match the canonical snippets."
+          else
+            printf 'Drift found:\n%s' "$report"
+          fi
+
+      - name: Open or update the drift issue
+        if: steps.check.outputs.drift == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORT: ${{ steps.check.outputs.report }}
+        run: |
+          set -euo pipefail
+          title="docs: snippet drift"
+
+          body=$(cat <<BODY
+          The canonical strings in [website/snippets](https://github.com/TorrenClou/website/tree/main/snippets)
+          no longer match what the READMEs contain.
+
+          ${REPORT}
+
+          Either update the README, or update the snippet if the canonical value
+          genuinely changed. These are checked rather than injected, so nothing
+          fixes itself.
+
+          This issue is updated by the nightly \`Snippet drift\` workflow and can
+          be closed once resolved.
+          BODY
+          )
+
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "$title in:title" --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
+            echo "Updated issue #$existing"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body "$body"
+          fi
+
+      - name: Close the drift issue when everything matches
+        if: steps.check.outputs.drift == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "docs: snippet drift in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --repo "$GITHUB_REPOSITORY" \
+              --comment "Snippets match again. Closed by the nightly check."
+          fi
