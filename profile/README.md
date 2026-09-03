@@ -1,140 +1,65 @@
-# TorrentClou
+# TorrenClou
 
-**Self-hosted torrent management platform — download, organize, and sync torrents to Google Drive or S3.**
+**Self-hosted torrent-to-cloud.** Point it at a `.torrent`, pick the files you
+want, and it downloads them on your server and uploads them straight to Google
+Drive or any S3-compatible storage.
 
-One Docker image. One command. Everything included.
+One container. No configuration files.
 
-## Quick Start
+## Install
 
-**Prerequisites:** [Docker](https://docs.docker.com/get-docker/) installed on your machine.
-
-### 1. Clone and configure
-
+<!-- snippet:install-linux -->
 ```bash
-git clone https://github.com/TorrenClou/deploy.git
-cd deploy
-cp .env.example .env
+curl -fsSL https://raw.githubusercontent.com/TorrenClou/deploy/main/install.sh | bash
 ```
+<!-- /snippet -->
 
-Edit `.env` and replace all `<CHANGE_ME>` values with your own secrets.
+Windows (PowerShell):
 
-### 2. Run
-
-**Linux / macOS:**
-```bash
-./run.sh
-```
-
-**Windows (PowerShell):**
+<!-- snippet:install-windows -->
 ```powershell
-.\run.ps1
+irm https://raw.githubusercontent.com/TorrenClou/deploy/main/install.ps1 | iex
 ```
+<!-- /snippet -->
 
-**Or run directly:**
-```bash
-docker run -d --name torrencloud -p 3000:3000 -p 5000:5000 -v torrencloud-pgdata:/data/postgres -v torrencloud-redis:/data/redis -v torrencloud-downloads:/data/downloads --env-file .env ghcr.io/torrenclou/torrentclou:latest
-```
+Docker is the only requirement. There is no `.env` to fill in and no secrets to
+generate — the container creates its own on first boot and keeps them on its
+data volume. Open the URL it prints and create your account.
 
-### 3. Open
+## What it does
 
-| Service | URL |
-|---------|-----|
-| Frontend | http://localhost:3000 |
-| API | http://localhost:5000/api |
-| API Health | http://localhost:5000/api/health/ready |
-| Hangfire Dashboard | http://localhost:5000/hangfire |
+- Add a torrent by file or magnet link, inspect its contents, and download only
+  the files you actually want.
+- Upload finished downloads to **Google Drive** or **S3** — AWS, Backblaze B2,
+  Cloudflare R2, MinIO, or anything else that speaks the S3 API.
+- Uses **your** storage credentials. Nothing is proxied through a third party.
+- Watch transfers, retries and failures from the dashboard, with Grafana
+  dashboards bundled in if you want them.
 
----
-
-## What's Inside
-
-The all-in-one image bundles everything needed to run TorrentClou:
-
-| Component | Technology |
-|-----------|------------|
-| Frontend | Next.js 15 (React 18, TypeScript, Tailwind CSS) |
-| Backend API | .NET 9.0 (Clean Architecture) |
-| Torrent Worker | Background job processor for torrent downloads |
-| Google Drive Worker | Syncs completed downloads to Google Drive |
-| S3 Worker | Uploads completed downloads to S3-compatible storage |
-| Database | PostgreSQL 15 |
-| Cache & Jobs | Redis 7 |
-| Process Manager | supervisord |
-
-## Data Persistence
-
-Data is stored in Docker volumes that survive container restarts:
-
-| Volume | Container Path | Purpose |
-|--------|---------------|---------|
-| `torrencloud-pgdata` | `/data/postgres` | PostgreSQL database |
-| `torrencloud-redis` | `/data/redis` | Redis data |
-| `torrencloud-downloads` | `/data/downloads` | Downloaded torrent files |
-
-## Environment Variables
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `POSTGRES_PASSWORD` | Yes | - | PostgreSQL password |
-| `JWT_SECRET` | Yes | - | JWT signing key (min 32 chars) |
-| `NEXTAUTH_SECRET` | Yes | - | NextAuth.js secret |
-| `GOOGLE_CLIENT_ID` | Yes | - | Google OAuth client ID |
-| `ADMIN_EMAIL` | No | `admin@example.com` | Admin login email |
-| `ADMIN_PASSWORD` | Yes | - | Admin login password |
-| `ADMIN_NAME` | No | `Admin` | Admin display name |
-| `NEXTAUTH_URL` | No | `http://localhost:3000` | Public URL of the frontend |
-| `POSTGRES_DB` | No | `torrenclo` | Database name |
-| `POSTGRES_USER` | No | `torrenclo_user` | Database user |
-| `JWT_ISSUER` | No | `TorrenClou_API` | JWT issuer |
-| `JWT_AUDIENCE` | No | `TorrenClou_Client` | JWT audience |
-| `HANGFIRE_WORKER_COUNT` | No | `10` | Background job concurrency |
-
-See [`.env.example`](.env.example) for the full list including optional observability settings.
-
-## Stopping and Restarting
-
-```bash
-# Stop
-docker stop torrencloud
-
-# Start again (data persists)
-docker start torrencloud
-
-# Remove container (data still persists in volumes)
-docker rm torrencloud
-
-# Remove everything including data
-docker rm torrencloud
-docker volume rm torrencloud-pgdata torrencloud-redis torrencloud-downloads
-```
-
-## Updating
-
-```bash
-docker pull ghcr.io/torrenclou/torrentclou:latest
-docker stop torrencloud && docker rm torrencloud
-# Re-run with the same command or script — volumes persist
-./run.sh
-```
-
-See [docs/UPDATING.md](docs/UPDATING.md) for the full update guide including database migration considerations.
+Everything else has a working default and is configurable in the app's Settings.
 
 ## Documentation
 
-- [Usage Guide](docs/USAGE.md) — Detailed setup and configuration
-- [Technical Architecture](docs/TECHNICAL.md) — System design, CI/CD pipeline, internals
-- [Updating Guide](docs/UPDATING.md) — How to update to new versions safely
+**[tc.gitnasr.com/docs](https://tc.gitnasr.com/docs)** — installation, first-run
+setup, configuration, storage providers, monitoring and troubleshooting.
 
-## CI/CD
+## Repositories
 
-Images are built automatically when code is merged to `main` in either the [backend](https://github.com/TorrenClou/backend) or [frontend](https://github.com/TorrenClou/frontend) repository. The build pipeline uses GitHub Actions with cross-repository dispatch.
-
-Image tags follow the format: `YYYY.MM.DD-<backend-sha>-<frontend-sha>`
+| Repository | Contents |
+|------------|----------|
+| [deploy](https://github.com/TorrenClou/deploy) | The all-in-one Docker image, the installer, and CI. Start here. |
+| [backend](https://github.com/TorrenClou/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
+| [frontend](https://github.com/TorrenClou/frontend) | Next.js web app |
+| [website](https://github.com/TorrenClou/website) | Documentation site — the canonical docs live here |
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+Issues and pull requests are welcome on any repository. See
+[CONTRIBUTING.md](https://github.com/TorrenClou/.github/blob/main/CONTRIBUTING.md)
+for how the repos fit together, and
+[SECURITY.md](https://github.com/TorrenClou/.github/blob/main/SECURITY.md)
+to report a vulnerability privately.
 
 ## License
 
-This project is proprietary software. All rights reserved.
+MIT.
