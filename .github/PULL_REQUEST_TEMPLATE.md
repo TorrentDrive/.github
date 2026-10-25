@@ -17,6 +17,6 @@ becomes the commit message and drives the changelog.
 
 ## Notes
 
-- [ ] Docs updated in [website/content/docs](https://github.com/TorrenClou/website/tree/main/content/docs), or no docs change needed
+- [ ] Docs updated in [website/content/docs](https://github.com/TorrentDrive/website/tree/main/content/docs), or no docs change needed
 - [ ] Any new migration is additive and safe to roll back past
 - [ ] No relative links added to Markdown

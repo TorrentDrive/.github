@@ -4,5 +4,5 @@ contact_links:
     url: https://tc.gitnasr.com/docs
     about: Installation, configuration, storage providers and troubleshooting.
   - name: Report a security vulnerability
-    url: https://github.com/TorrenClou/.github/blob/main/SECURITY.md
+    url: https://github.com/TorrentDrive/.github/blob/main/SECURITY.md
     about: Please report privately, not as a public issue.
