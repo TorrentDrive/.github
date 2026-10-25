@@ -1,4 +1,4 @@
-# TorrenClou
+# TorrentDrive
 
 **Self-hosted torrent-to-cloud.** Point it at a `.torrent`, pick the files you
 want, and it downloads them on your server and uploads them straight to Google
@@ -10,7 +10,7 @@ One container. No configuration files.
 
 <!-- snippet:install-linux -->
 ```bash
-curl -fsSL https://raw.githubusercontent.com/TorrenClou/deploy/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/TorrentDrive/deploy/main/install.sh | bash
 ```
 <!-- /snippet -->
 
@@ -18,7 +18,7 @@ Windows (PowerShell):
 
 <!-- snippet:install-windows -->
 ```powershell
-irm https://raw.githubusercontent.com/TorrenClou/deploy/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/TorrentDrive/deploy/main/install.ps1 | iex
 ```
 <!-- /snippet -->
 
@@ -47,17 +47,17 @@ setup, configuration, storage providers, monitoring and troubleshooting.
 
 | Repository | Contents |
 |------------|----------|
-| [deploy](https://github.com/TorrenClou/deploy) | The all-in-one Docker image, the installer, and CI. Start here. |
-| [backend](https://github.com/TorrenClou/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
-| [frontend](https://github.com/TorrenClou/frontend) | Next.js web app |
-| [website](https://github.com/TorrenClou/website) | Documentation site — the canonical docs live here |
+| [deploy](https://github.com/TorrentDrive/deploy) | The all-in-one Docker image, the installer, and CI. Start here. |
+| [backend](https://github.com/TorrentDrive/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
+| [frontend](https://github.com/TorrentDrive/frontend) | Next.js web app |
+| [website](https://github.com/TorrentDrive/website) | Documentation site — the canonical docs live here |
 
 ## Contributing
 
 Issues and pull requests are welcome on any repository. See
-[CONTRIBUTING.md](https://github.com/TorrenClou/.github/blob/main/CONTRIBUTING.md)
+[CONTRIBUTING.md](https://github.com/TorrentDrive/.github/blob/main/CONTRIBUTING.md)
 for how the repos fit together, and
-[SECURITY.md](https://github.com/TorrenClou/.github/blob/main/SECURITY.md)
+[SECURITY.md](https://github.com/TorrentDrive/.github/blob/main/SECURITY.md)
 to report a vulnerability privately.
 
 ## License

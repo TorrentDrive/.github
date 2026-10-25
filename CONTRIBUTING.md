@@ -1,4 +1,4 @@
-# Contributing to TorrenClou
+# Contributing to TorrentDrive
 
 Thanks for helping out. This applies to every repository in the organization
 unless that repository has its own `CONTRIBUTING.md`.
@@ -7,10 +7,10 @@ unless that repository has its own `CONTRIBUTING.md`.
 
 | Repository | Contents |
 |------------|----------|
-| [backend](https://github.com/TorrenClou/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
-| [frontend](https://github.com/TorrenClou/frontend) | Next.js web app |
-| [deploy](https://github.com/TorrenClou/deploy) | The Dockerfile that bundles all of the above into one image, plus the installer and CI |
-| [website](https://github.com/TorrenClou/website) | Documentation site, and the canonical docs |
+| [backend](https://github.com/TorrentDrive/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
+| [frontend](https://github.com/TorrentDrive/frontend) | Next.js web app |
+| [deploy](https://github.com/TorrentDrive/deploy) | The Dockerfile that bundles all of the above into one image, plus the installer and CI |
+| [website](https://github.com/TorrentDrive/website) | Documentation site, and the canonical docs |
 
 Merging to `main` in `backend` or `frontend` rebuilds the combined image in
 `deploy`. Nothing needs to be released by hand.
@@ -18,7 +18,7 @@ Merging to `main` in `backend` or `frontend` rebuilds the combined image in
 ## Documentation goes in one place
 
 **`website/content/docs` is the single source of truth.** Everything about
-installing, configuring or operating TorrenClou lives there and is published at
+installing, configuring or operating TorrentDrive lives there and is published at
 [tc.gitnasr.com/docs](https://tc.gitnasr.com/docs).
 
 READMEs link to it. They do not restate it. If your change adds a setting, a
@@ -63,4 +63,4 @@ There is no separate style guide to memorize.
 ## Security
 
 Do not open a public issue for a vulnerability. See
-[SECURITY.md](https://github.com/TorrenClou/.github/blob/main/SECURITY.md).
+[SECURITY.md](https://github.com/TorrentDrive/.github/blob/main/SECURITY.md).

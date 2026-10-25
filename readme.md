@@ -1,10 +1,10 @@
 # .github
 
-Organization-level defaults for [TorrenClou](https://github.com/TorrenClou).
+Organization-level defaults for [TorrentDrive](https://github.com/TorrentDrive).
 
 | Path | What it does |
 |------|--------------|
-| `profile/README.md` | The page shown at [github.com/TorrenClou](https://github.com/TorrenClou) |
+| `profile/README.md` | The page shown at [github.com/TorrentDrive](https://github.com/TorrentDrive) |
 | `CONTRIBUTING.md` | Default contributing guide for every repo without its own |
 | `SECURITY.md` | How to report a vulnerability |
 | `CODE_OF_CONDUCT.md` | Default code of conduct |

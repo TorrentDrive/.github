@@ -2,7 +2,7 @@ name: Snippet drift
 
 # A few short strings have to appear verbatim in more than one repository: the
 # two install commands, the image name, the tagline. They live in
-# TorrenClou/website under snippets/ and are CHECKED here, never injected.
+# TorrentDrive/website under snippets/ and are CHECKED here, never injected.
 #
 # Injection was considered and rejected. It needs a bot with write access to
 # four repositories, it conflicts with every hand-edited README, and it produces
@@ -33,7 +33,7 @@ jobs:
         run: |
           set -uo pipefail
 
-          RAW=https://raw.githubusercontent.com/TorrenClou
+          RAW=https://raw.githubusercontent.com/TorrentDrive
 
           fetch() {
             curl -fsSL --max-time 30 "$1" 2>/dev/null
@@ -108,7 +108,7 @@ jobs:
           title="docs: snippet drift"
 
           body=$(cat <<BODY
-          The canonical strings in [website/snippets](https://github.com/TorrenClou/website/tree/main/snippets)
+          The canonical strings in [website/snippets](https://github.com/TorrentDrive/website/tree/main/snippets)
           no longer match what the READMEs contain.
 
           ${REPORT}

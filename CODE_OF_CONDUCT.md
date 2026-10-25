@@ -13,7 +13,7 @@ discussion.
 
 ## Scope
 
-This applies in every TorrenClou repository — issues, pull requests, code review
+This applies in every TorrentDrive repository — issues, pull requests, code review
 and commit messages — and anywhere someone is representing the project.
 
 ## Enforcement
