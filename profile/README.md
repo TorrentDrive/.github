@@ -10,7 +10,7 @@ One container. No configuration files.
 
 <!-- snippet:install-linux -->
 ```bash
-curl -fsSL https://raw.githubusercontent.com/TorrentDrive/deploy/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/TorrentDrive/backend/main/install.sh | bash
 ```
 <!-- /snippet -->
 
@@ -18,7 +18,7 @@ Windows (PowerShell):
 
 <!-- snippet:install-windows -->
 ```powershell
-irm https://raw.githubusercontent.com/TorrentDrive/deploy/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/TorrentDrive/backend/main/install.ps1 | iex
 ```
 <!-- /snippet -->
 
@@ -47,8 +47,7 @@ setup, configuration, storage providers, monitoring and troubleshooting.
 
 | Repository | Contents |
 |------------|----------|
-| [deploy](https://github.com/TorrentDrive/deploy) | The all-in-one Docker image, the installer, and CI. Start here. |
-| [backend](https://github.com/TorrentDrive/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
+| [backend](https://github.com/TorrentDrive/backend) | .NET 9 API, workers, the all-in-one Docker image, the installer, PaaS blueprints, and CI. Start here. |
 | [frontend](https://github.com/TorrentDrive/frontend) | Next.js web app |
 | [website](https://github.com/TorrentDrive/website) | Documentation site — the canonical docs live here |
 
