@@ -10,7 +10,6 @@ thread visible only to maintainers.
 
 - [backend](https://github.com/TorrentDrive/backend/security/advisories/new)
 - [frontend](https://github.com/TorrentDrive/frontend/security/advisories/new)
-- [deploy](https://github.com/TorrentDrive/deploy/security/advisories/new)
 - [website](https://github.com/TorrentDrive/website/security/advisories/new)
 
 Please include what you found, how to reproduce it, and what an attacker could

@@ -7,13 +7,12 @@ unless that repository has its own `CONTRIBUTING.md`.
 
 | Repository | Contents |
 |------------|----------|
-| [backend](https://github.com/TorrentDrive/backend) | .NET 9 API and the torrent, Google Drive and S3 workers |
+| [backend](https://github.com/TorrentDrive/backend) | .NET 9 API, the torrent, Google Drive and S3 workers, the all-in-one Dockerfile, compose manifests, PaaS blueprints, installer, and CI |
 | [frontend](https://github.com/TorrentDrive/frontend) | Next.js web app |
-| [deploy](https://github.com/TorrentDrive/deploy) | The Dockerfile that bundles all of the above into one image, plus the installer and CI |
 | [website](https://github.com/TorrentDrive/website) | Documentation site, and the canonical docs |
 
 Merging to `main` in `backend` or `frontend` rebuilds the combined image in
-`deploy`. Nothing needs to be released by hand.
+`backend`. Nothing needs to be released by hand.
 
 ## Documentation goes in one place
 

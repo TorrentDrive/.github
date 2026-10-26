@@ -13,7 +13,7 @@ Organization-level defaults for [TorrentDrive](https://github.com/TorrentDrive).
 
 **This file is not the org profile.** GitHub renders `profile/README.md` on the
 organization page and this one only on this repository. They used to hold the
-same content, copied from `deploy/README.md`, which meant the org page carried
+same content, copied from `backend/README.md`, which meant the org page carried
 relative links like `docs/USAGE.md` that resolved against this repo and 404'd.
 
 Product documentation belongs at

@@ -5,7 +5,7 @@ name: Snippet drift
 # TorrentDrive/website under snippets/ and are CHECKED here, never injected.
 #
 # Injection was considered and rejected. It needs a bot with write access to
-# four repositories, it conflicts with every hand-edited README, and it produces
+# three repositories, it conflicts with every hand-edited README, and it produces
 # commit noise indistinguishable from real work — all to keep four strings in
 # sync.
 #
@@ -51,7 +51,6 @@ jobs:
           # repo:snippets that must appear in its README
           targets="
           .github:profile/README.md:both
-          deploy:README.md:both
           backend:README.md:linux
           frontend:README.md:linux
           "
