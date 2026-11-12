@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="torrentdrive">
+  <title>torrentdrive</title>
+  <rect width="1024" height="1024" fill="#14110F"/>
+  <g transform="translate(0 -6)">
+    <rect fill="#F4F1EA" x="440" y="196" width="144" height="300"/>
+    <polygon fill="#F4F1EA" points="270,456 754,456 512,698"/>
+    <rect fill="#FF5A43" x="342" y="762" width="340" height="74"/>
+  </g>
+</svg>
